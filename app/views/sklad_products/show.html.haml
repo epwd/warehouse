@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Product:
+  = @sklad_product.product
+%p
+  %b Sklad:
+  = @sklad_product.sklad
+%p
+  %b Quantify:
+  = @sklad_product.quantify
+
+= link_to 'Edit', edit_sklad_product_path(@sklad_product)
+\|
+= link_to 'Back', sklad_products_path

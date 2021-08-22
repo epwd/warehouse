@@ -34,5 +34,15 @@ module Warehouse
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    
+    config.hosts << "debian.vbox"
+    config.hosts << "vboxonmac.local"
+    
+    config.time_zone = 'Moscow'
+    config.i18n.default_locale = :ru
+    config.generators.stylesheets = false
+    config.generators.javascripts = false
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

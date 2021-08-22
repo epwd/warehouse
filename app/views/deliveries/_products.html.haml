@@ -1,0 +1,14 @@
+%table
+  %thead
+    %tr
+      %th= t 'delivery?'
+      %th= t 'delivery_date'
+      %th= t 'product'
+      %th= t 'quantify'
+  %tbody
+    - @products.each do |product|
+      %tr
+        %td= check_box_tag("products[]", product.id )
+        %td= datetime_select :delivery_dates, product.id,  :start_year => Date.today.year
+        %td= product.name
+        %td= number_field_tag "quantify[#{product.id}]", 0, min: 0

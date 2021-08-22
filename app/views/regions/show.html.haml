@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %strong City:
+  = @region.city
+%p
+  %strong Name:
+  = @region.name
+%p
+  %strong District:
+  = @region.district
+%p
+  %strong Lat:
+  = @region.lat
+%p
+  %strong Lng:
+  = @region.lng
+= link_to 'Edit', edit_region_path(@region)
+|
+= link_to 'Back', regions_path

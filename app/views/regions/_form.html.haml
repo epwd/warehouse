@@ -1,0 +1,26 @@
+= form_with(model: region) do |form|
+  - if region.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(region.errors.count, "error")
+        prohibited this region from being saved:
+      %ul
+        - region.errors.each do |error|
+          %li= error.full_message
+  .field
+    = form.label :city
+    = form.text_field :city
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    = form.label :district
+    = form.text_field :district
+  .field
+    = form.label :lat
+    = form.text_field :lat
+  .field
+    = form.label :lng
+    = form.text_field :lng
+  .actions
+    = form.submit

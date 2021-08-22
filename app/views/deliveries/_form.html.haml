@@ -1,0 +1,34 @@
+= form_for @delivery do |f|
+  - if @delivery.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@delivery.errors.count, "error")} prohibited this delivery from being saved:"
+      %ul
+        - @delivery.errors.full_messages.each do |message|
+          %li= message
+
+  = hidden_field_tag :sklad_id, @sklad.id
+
+  .field
+    = render 'products', form: f
+  .actions
+
+    = f.submit t('create_delivery')
+  
+  / 
+    .field
+      = f.label :date_time
+      = f.datetime_select :date_time
+    .field
+      = f.label :product
+      = f.text_field :product
+    .field
+      = f.label :sklad
+      = f.text_field :sklad
+    .field
+      = f.label :quantify
+      = f.text_field :quantify
+    .field
+      = f.label :aasm_state
+      = f.text_field :aasm_state
+    .actions
+      = f.submit 'Save'

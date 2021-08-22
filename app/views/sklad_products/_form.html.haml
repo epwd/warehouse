@@ -1,0 +1,14 @@
+= form_for @sklad_product do |f|
+  - if @sklad_product.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@sklad_product.errors.count, "error")} prohibited this sklad_product from being saved:"
+      %ul
+        - @sklad_product.errors.full_messages.each do |message|
+          %li= message
+  = f.hidden_field :sklad, value: @sklad.id
+
+  .field
+    = render 'products', form: f
+  .actions
+
+    = f.submit t('create_delivery')

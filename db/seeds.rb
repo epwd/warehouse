@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'csv'
+
+CSV.read('koord_russia_.csv').each do |str|
+	Region.where( lat: str[3], lng: str[4] ).first_or_create( city: str[0], name: str[1], district: str[2] )
+end

@@ -1,0 +1,17 @@
+= form_with(model: sklad) do |form|
+  - if sklad.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(sklad.errors.count, "error")
+        prohibited this sklad from being saved:
+      %ul
+        - sklad.errors.each do |error|
+          %li= error.full_message
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    = form.label :region
+    = form.select 'region', regions, {:prompt => t('select_region')}
+  .actions
+    = form.submit

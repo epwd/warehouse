@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %strong Src:
+  = @history_transfer.src
+%p
+  %strong Dst:
+  = @history_transfer.dst
+%p
+  %strong Transferred:
+  = @history_transfer.transferred
+= link_to 'Edit', edit_history_transfer_path(@history_transfer)
+|
+= link_to 'Back', history_transfers_path

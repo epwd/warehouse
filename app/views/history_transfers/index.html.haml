@@ -1,0 +1,20 @@
+%p#notice= notice
+%h1 History Transfers
+%table
+  %thead
+    %tr
+      %th Src
+      %th Dst
+      %th Transferred
+      %th{:colspan => "3"}
+  %tbody
+    - @history_transfers.each do |history_transfer|
+      %tr
+        %td= history_transfer.src
+        %td= history_transfer.dst
+        %td= history_transfer.transferred
+        %td= link_to 'Show', history_transfer
+        %td= link_to 'Edit', edit_history_transfer_path(history_transfer)
+        %td= link_to 'Destroy', history_transfer, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New History Transfer', new_history_transfer_path

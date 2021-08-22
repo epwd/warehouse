@@ -1,0 +1,20 @@
+= form_with(model: history_transfer) do |form|
+  - if history_transfer.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(history_transfer.errors.count, "error")
+        prohibited this history_transfer from being saved:
+      %ul
+        - history_transfer.errors.each do |error|
+          %li= error.full_message
+  .field
+    = form.label :src
+    = form.text_field :src
+  .field
+    = form.label :dst
+    = form.text_field :dst
+  .field
+    = form.label :transferred
+    = form.text_area :transferred
+  .actions
+    = form.submit

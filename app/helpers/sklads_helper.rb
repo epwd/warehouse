@@ -1,0 +1,2 @@
+module SkladsHelper
+end

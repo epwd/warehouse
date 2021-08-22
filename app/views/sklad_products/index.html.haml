@@ -1,0 +1,25 @@
+%h1 Listing sklad_products
+
+%table
+  %thead
+    %tr
+      %th Product
+      %th Sklad
+      %th Quantify
+      %th
+      %th
+      %th
+
+  %tbody
+    - @sklad_products.each do |sklad_product|
+      %tr
+        %td= sklad_product.product
+        %td= sklad_product.sklad
+        %td= sklad_product.quantify
+        %td= link_to 'Show', sklad_product
+        %td= link_to 'Edit', edit_sklad_product_path(sklad_product)
+        %td= link_to 'Destroy', sklad_product, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Sklad product', new_sklad_product_path

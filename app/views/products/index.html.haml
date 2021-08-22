@@ -1,0 +1,20 @@
+%p#notice= notice
+%h1= t 'products'
+%table
+  %thead
+    %tr
+      %th= t 'name'
+      %th= t 'created_at'
+      %th= t 'updated_at'
+      %th{:colspan => "2"}= t 'actions'
+  %tbody
+    - @products.each do |product|
+      %tr
+        %td= product.name
+        %td= product.created_at
+        %td= product.updated_at
+        - # %td= link_to t('show'), product
+        %td= link_to t('edit'), edit_product_path(product)
+        %td= link_to t('destroy'), product, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to t('new_product'), new_product_path

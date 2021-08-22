@@ -1,0 +1,18 @@
+%p#notice= notice
+%h1= t 'sklads'
+%table
+  %thead
+    %tr
+      %th= t 'name'
+      %th= t 'created_at'
+      %th{:colspan => "2"}
+  %tbody
+    - @sklads.each do |sklad|
+      %tr
+        %td= sklad.name
+        %td= sklad.created_at
+        %td= link_to t('show'), sklad
+        / %td= link_to 'Edit', edit_sklad_path(region)
+        %td= link_to t('destroy'), sklad, method: :delete, data: { confirm: t('you_sure?') }
+%br/
+= link_to t('new_sklad'), new_sklad_path

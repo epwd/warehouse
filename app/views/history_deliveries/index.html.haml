@@ -1,0 +1,16 @@
+%p#notice= notice
+%h1 History Deliveries
+%table
+  %thead
+    %tr
+      %th Delivered
+      %th{:colspan => "3"}
+  %tbody
+    - @history_deliveries.each do |history_delivery|
+      %tr
+        %td= history_delivery.delivered
+        %td= link_to 'Show', history_delivery
+        %td= link_to 'Edit', edit_history_delivery_path(history_delivery)
+        %td= link_to 'Destroy', history_delivery, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New History Delivery', new_history_delivery_path

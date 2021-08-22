@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = @delivery.date
+%p
+  %b Product:
+  = @delivery.product
+%p
+  %b Sklad:
+  = @delivery.sklad
+%p
+  %b Quantify:
+  = @delivery.quantify
+%p
+  %b Aasm state:
+  = @delivery.aasm_state
+
+= link_to 'Edit', edit_delivery_path(@delivery)
+\|
+= link_to 'Back', deliveries_path

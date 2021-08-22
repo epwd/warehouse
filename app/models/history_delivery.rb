@@ -1,0 +1,2 @@
+class HistoryDelivery < ApplicationRecord
+end

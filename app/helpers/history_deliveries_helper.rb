@@ -1,0 +1,2 @@
+module HistoryDeliveriesHelper
+end
