@@ -1,0 +1,16 @@
+table {
+  th {
+    border-bottom: 1px solid gray;
+  }
+  th, td {
+    text-align: center;
+  }
+  input[type="number"] {
+    width: 50px;
+  }
+}
+
+ul li {
+  list-style: none;
+  text-align: left;
+}

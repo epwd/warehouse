@@ -6,6 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   def created_at_original
     created_at(true)
   end
+
   def created_at(original=false)
     if original == true
       attributes['created_at']

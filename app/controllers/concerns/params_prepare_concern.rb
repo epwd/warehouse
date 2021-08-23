@@ -1,4 +1,4 @@
-module DeliveryConcern
+module ParamsPrepareConcern
   def date_time product_id
     l = lambda { |o| params["delivery_dates"]["#{product_id}(#{o})"] }
     "#{l.('1i')}-#{l.('2i')}-#{l.('3i')} #{l.('4i')}:#{l.('5i')}:00"

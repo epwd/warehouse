@@ -7,10 +7,14 @@ class Delivery < ApplicationRecord
   aasm do
     state :inprocess, initial: true
     state :delivered
+    state :failed
 
     event :deliver do
       transitions from: [:inprocess], to: :delivered
     end
-  end
 
+    event :fail do
+      transitions from: [:inprocess], to: :failed
+    end
+  end
 end

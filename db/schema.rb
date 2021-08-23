@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_22_020256) do
+ActiveRecord::Schema.define(version: 2021_08_23_001340) do
 
   create_table "deliveries", force: :cascade do |t|
     t.datetime "date_time"
     t.integer "product_id", null: false
     t.integer "sklad_id", null: false
-    t.bigint "quantify"
+    t.integer "quantify"
     t.string "aasm_state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "consignment"
     t.index ["product_id"], name: "index_deliveries_on_product_id"
     t.index ["sklad_id"], name: "index_deliveries_on_sklad_id"
   end
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 2021_08_22_020256) do
     t.integer "quantify"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "delivery_last"
     t.index ["product_id"], name: "index_sklad_products_on_product_id"
     t.index ["sklad_id"], name: "index_sklad_products_on_sklad_id"
   end
@@ -73,8 +75,21 @@ ActiveRecord::Schema.define(version: 2021_08_22_020256) do
     t.index ["region"], name: "index_sklads_on_region"
   end
 
+  create_table "transfers", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "src_sklad"
+    t.integer "dst_sklad"
+    t.integer "quantify"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "aasm_state"
+    t.text "products"
+    t.index ["product_id"], name: "index_transfers_on_product_id"
+  end
+
   add_foreign_key "deliveries", "products"
   add_foreign_key "deliveries", "sklads"
   add_foreign_key "sklad_products", "products"
   add_foreign_key "sklad_products", "sklads"
+  add_foreign_key "transfers", "products"
 end

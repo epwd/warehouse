@@ -1,2 +1,0 @@
-class HistoryDelivery < ApplicationRecord
-end

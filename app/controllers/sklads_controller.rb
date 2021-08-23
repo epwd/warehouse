@@ -1,5 +1,6 @@
 class SkladsController < ApplicationController
   before_action :set_sklad, only: [:show, :edit, :update, :destroy]
+  # before_action :set_products, only: :show
   before_action :set_regions
 
   # GET /sklads
@@ -9,6 +10,7 @@ class SkladsController < ApplicationController
 
   # GET /sklads/1
   def show
+
   end
 
   # GET /sklads/new
@@ -25,7 +27,7 @@ class SkladsController < ApplicationController
     @sklad = Sklad.new(sklad_params)
 
     if @sklad.save
-      redirect_to @sklad, notice: 'Sklad was successfully created.'
+      redirect_to @sklad, notice: t('sklad_created_ok')
     else
       render :new
     end

@@ -1,0 +1,33 @@
+= form_for @transfer do |f|
+  - if @transfer.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@transfer.errors.count, "error")} prohibited this transfer from being saved:"
+      %ul
+        - @transfer.errors.full_messages.each do |message|
+          %li= message
+  
+  %p
+    %strong= t('transfer')+':'
+    = @transfer.src.name
+    >>
+    = @transfer.dst.name  
+
+  %table
+    %thead
+      %tr
+        %th= t 'transfer?'
+        %th= t 'name_product'
+        %th= t 'quantify_src_sklad'
+        %th= t 'quantify_send_sklad'
+        %th= t 'quantify_dst_sklad'
+    %tbody
+      - @transfer.src.sklad_products.each do |sklad_product|
+        %tr
+          %td= check_box_tag("products[]", sklad_product.product_id )
+          %td= sklad_product.product.name
+          %td= number_field_tag "quantify[#{sklad_product.product_id}]", sklad_product.quantify, disabled: true
+          %td= number_field_tag "quantify[#{sklad_product.product_id}]", 0, min: 0, max: sklad_product.quantify
+          %td= number_field_tag "quantify[#{sklad_product.product_id}]", @transfer.dst.product_quantify(sklad_product.product_id), disabled: true
+
+  .actions
+    = f.submit t 'terminate_transferring'

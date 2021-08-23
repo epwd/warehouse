@@ -3,11 +3,19 @@ class DeliveriesController < ApplicationController
   before_action :set_sklad, only: :new
   before_action :set_products, only: :new
 
-  include DeliveryConcern
+  include ParamsPrepareConcern
   
   # GET /deliveries
   def index
-    @deliveries = Delivery.all
+    @deliveries = Hash.new
+    Delivery.all.sort_by(&:date_time).reverse.each do |delivery|
+      # for delivered column
+      if @deliveries.has_key?(delivery.consignment)
+        @deliveries[delivery.consignment].push( make_delivered(delivery) )
+      else
+        @deliveries[delivery.consignment] = [ make_delivered(delivery) ]
+      end
+    end
   end
 
   # GET /deliveries/1
@@ -24,13 +32,13 @@ class DeliveriesController < ApplicationController
   end
 
   # POST /deliveries
-  def create
+  def create(delivery=nil)
     prepare_params.each do |prepared_params| 
-        delivery = Delivery.create(prepared_params)
-        MakeDeliveryWorker.perform_at( delivery.datetime, deliver.id )
+      delivery = Delivery.create(prepared_params.merge({ consignment: Time.now.to_i }))
+      MakeDeliveryWorker.perform_at( delivery.date_time, delivery.id )
     end
-    if created
-      redirect_to deliveries_url, notice: 'Delivery was successfully created.'
+    if delivery # one of..
+      redirect_to deliveries_url, notice: t('delivery_ok')
     else
       render :new
     end
@@ -84,5 +92,14 @@ class DeliveriesController < ApplicationController
         })
       end
       deliveries
+    end
+
+    def make_delivered delivery
+      {
+        name: delivery.product.name,
+        quantify: delivery.quantify,
+        created_at: delivery.created_at,
+        date_time: l(delivery.date_time,  :format => "%d %B %Y - %H:%M")
+      }
     end
 end

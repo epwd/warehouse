@@ -10,20 +10,40 @@ application: &application
   product: "Товар"
   products: "Товары"
   new_product: "Создать товар"
+  name_product: 'Наименование товара'
+  edit_product: 'Редактировать товар'
   
   sklad: 'Склад'
   sklads: 'Склады'
   new_sklad: 'Создать склад'
+  select_sklad: 'Выбрать склад'
+  src_sklad: 'Склад источник'
+  dst_sklad: 'Склад приемник'
+  quantify_on_sklad: 'Количество на складе'
+  quantify_src_sklad: 'Текущее количество на исходном складе'
+  quantify_dst_sklad: 'Текущее количество на целевом складе'
+  quantify_send_sklad: 'Количество переданного товара'
+  src2_sklad: 'Исходный склад'
+  dst2_sklad: 'Целевой склад'
 
   delivery: 'Доставка товаров'
   delivery?: 'Доставить'
+  delivered: 'Доставлено'
   create_delivery: 'Оформить доставку'
   history_delivery: 'История доставок'
+  last_date_delivery: 'Дата последней доставки'
+  not_exist_delivery: 'Доставки отсутствуют'
+  delivery_date: 'Дата доставки'
+
 
   transfer: 'Передача товаров'
-  history_transfer: 'История передач'
-
-
+  transfer?: 'Передать'
+  transfered: 'Передано'
+  history_transfer: 'История передач товаров'
+  start_transferring: 'Начать процесс передачи товаров'
+  finish_transferring: 'Завершение передачи товар(а/ов)'
+  terminate_transferring: 'Завершить процесс передачи товаров'
+  date_transfer: 'Дата передачи'
 
 
 meta: &meta
@@ -34,16 +54,25 @@ meta: &meta
   edit: 'Редактировать'
   destroy: 'Удалить'
   back: 'Назад'
-
-  delivery_date: 'Дата доставки'
+  ed: 'ед.'
 
 error: &error
   date_error: 'Доставка на указаную дату невозможна'
+  product_not_selected: 'Не выбран не один продукт'
+
+controller: &controller
+  delivery_ok: 'Доставка успешно создана'
+  product_created_ok: 'Продукт успешно создан'
+  sklad_created_ok: 'Склад успешно создан'
+  transfer_ok: 'Перемещение успешно создано'
+  product_update_ok: 'Товар отредактирован'
+
 ru:
   <<: *shared
   <<: *application
   <<: *meta
   <<: *error
+  <<: *controller
 
   activerecord:
     models:
@@ -56,6 +85,8 @@ ru:
         <<: *application
       region:
         <<: *shared
+      transfer:
+        <<: *application
 
   
   date:

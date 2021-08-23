@@ -1,1 +1,13 @@
-= render 'show'
+
+
+/ = link_to t('edit'), edit_sklad_path(@sklad)
+/ |
+/ = link_to t('back'), sklads_path
+
+= render 'sklads/menu'
+
+%p
+  %strong= t('sklad')+":"
+  = @sklad.name
+
+= render 'products'

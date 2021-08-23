@@ -1,0 +1,14 @@
+
+%h1= t 'products'
+%table
+  %thead
+    %tr
+      %th= t 'name'
+      %th= t 'quantify'
+      %th= t 'last_date_delivery'
+  %tbody
+    - @sklad.sklad_products.each do |sklad_product|
+      %tr
+        %td= sklad_product.product.name
+        %td= sklad_product.quantify
+        %td= sklad_product.try(:delivery_last) ? l(sklad_product.delivery_last,  :format => "%d %B %Y - %H:%M") : t('not_exist_delivery')

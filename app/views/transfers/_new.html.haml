@@ -1,0 +1,17 @@
+= form_for @transfer do |f|
+  - if @transfer.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@transfer.errors.count, "error")} prohibited this transfer from being saved:"
+      %ul
+        - @transfer.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :src_sklad
+    = f.collection_select(:src_sklad, @sklads, :id, :name, :prompt => t('select_sklad') ) 
+  .field
+    = f.label :dst_sklad
+    = f.collection_select(:dst_sklad, @sklads, :id, :name, :prompt => t('select_sklad') ) 
+
+  .actions
+    = f.submit t('start_transferring')

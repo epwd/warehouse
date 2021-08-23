@@ -1,0 +1,24 @@
+%h1= t('history_transfer')
+
+%table
+  %thead
+    %tr
+      %th= t 'src2_sklad'
+      %th= t 'dst2_sklad'
+      %th= t 'transfered'
+      %th= t 'date_transfer'
+
+  %tbody
+    - @transfers.each do |transfer|
+      %tr
+        %td= transfer.src.name
+        %td= transfer.dst.name
+        %td
+          %ul
+            - transfer.products.each do |element|
+              %li= products_quantify(element)
+
+        %td= transfer.updated_at
+        / %td= link_to 'Show', transfer
+        / %td= link_to 'Edit', edit_transfer_path(transfer)
+        / %td= link_to 'Destroy', transfer, method: :delete, data: { confirm: 'Are you sure?' }

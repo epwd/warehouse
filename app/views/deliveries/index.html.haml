@@ -1,29 +1,20 @@
-%h1 Listing deliveries
+%h1= t('history_delivery')
 
 %table
   %thead
     %tr
-      %th Date
-      %th Product
-      %th Sklad
-      %th Quantify
-      %th Aasm state
-      %th
-      %th
-      %th
+      %th= t 'delivery_date'
+      %th= t 'delivered'
+      %th= t 'updated_at'
 
   %tbody
-    - @deliveries.each do |delivery|
+    - @deliveries.each do |consignment,values|
       %tr
-        %td= delivery.date_time
-        %td= delivery.product
-        %td= delivery.sklad
-        %td= delivery.quantify
-        %td= delivery.aasm_state
-        %td= link_to 'Show', delivery
-        %td= link_to 'Edit', edit_delivery_path(delivery)
-        %td= link_to 'Destroy', delivery, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= values[0][:date_time]
+        %td
+          %ul
+            - values.each do |product|
+              %li
+                = "#{product[:name]} - #{product[:quantify]} ед."
+        %td= values[0][:created_at]
 
-%br
-
-= link_to 'New Delivery', new_delivery_path

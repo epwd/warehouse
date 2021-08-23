@@ -1,0 +1,18 @@
+
+
+%p
+  %b Product:
+  = @transfer.product
+%p
+  %b Src sklad:
+  = @transfer.src_sklad
+%p
+  %b Dst sklad:
+  = @transfer.dst_sklad
+%p
+  %b Quantify:
+  = @transfer.quantify
+
+= link_to 'Edit', edit_transfer_path(@transfer)
+\|
+= link_to 'Back', transfers_path

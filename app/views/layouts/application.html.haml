@@ -11,4 +11,5 @@
   %body{ class: "#{params[:controller]}"}
     = link_to 'Список товаров', products_path
     = link_to 'Список складов', sklads_path
+    %p#notice= notice
     = yield

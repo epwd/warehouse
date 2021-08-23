@@ -1,6 +1,8 @@
-= render 'sklads/show'
-
 %h1= t 'delivery'
+
+%p
+  %strong= t('sklad')+":"
+  = @sklad.name
 
 = render 'form'
 
