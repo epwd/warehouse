@@ -1,24 +1,9 @@
-# README
+# Приложение для складского учета товаров
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Пользовательские сценарии
+* Можно создать склад. У склада есть уникальное название и не уникальный атрибут региона, который можно выбрать из 8 доступных федеральных округов РФ: Центральный, Северо-Западный, Южный, Северо-Кавказский, Приволжский, Уральский, Сибирский, Дальневосточный
+* Можно создать товар, у которого есть уникальное название
+* Можно создать доставку товара на склад, что увеличивает его количество на складе
+* Можно создавать передачу товара между складами, что уменьшает его количество на исходном складе и увеличивает на целевом
+* Можно редактировать и удалять товары
+* Можно удалять склады                                                                                           	
