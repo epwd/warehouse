@@ -12,6 +12,7 @@ application: &application
   new_product: "Создать товар"
   name_product: 'Наименование товара'
   edit_product: 'Редактировать товар'
+  not_products: 'Выберите хотябы один товар'
   
   sklad: 'Склад'
   sklads: 'Склады'

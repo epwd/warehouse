@@ -1,6 +1,6 @@
 class DeliveriesController < ApplicationController
   before_action :set_delivery, only: [:show, :edit, :update, :destroy]
-  before_action :set_sklad, only: :new
+  before_action :set_sklad, only: [:new, :create]
   before_action :set_products, only: :new
 
   include ParamsPrepareConcern
@@ -32,15 +32,25 @@ class DeliveriesController < ApplicationController
   end
 
   # POST /deliveries
-  def create(delivery=nil)
-    prepare_params.each do |prepared_params| 
-      delivery = Delivery.create(prepared_params.merge({ consignment: Time.now.to_i }))
-      MakeDeliveryWorker.perform_at( delivery.date_time, delivery.id )
-    end
-    if delivery # one of..
+  def create( delivery=nil,delivered=false )
+    ActiveRecord::Base.transaction do
+      prepare_params.each do |prepared_params| 
+        @delivery = Delivery.new(prepared_params.merge({ consignment: Time.now.to_i }))
+        if @delivery.valid?
+          @delivery.save 
+          MakeDeliveryWorker.perform_at( @delivery.date_time, delivery.id )
+          delivered = true
+        else
+          delivered = false
+          raise ActiveRecord::Rollback
+        end
+      end
+    end 
+
+    if delivered # one of..
       redirect_to deliveries_url, notice: t('delivery_ok')
     else
-      render :new
+      redirect_to new_sklad_delivery_path(@sklad.id), notice: flash_error_message(@delivery)
     end
   end
 
@@ -81,17 +91,24 @@ class DeliveriesController < ApplicationController
   protected
     def prepare_params
       deliveries = []
-      params["products"].each do |product_id|
-        # some methods from concerns
-        deliveries.push({
-          date_time: date_time(product_id), 
-          product_id: product_id.to_i,
-          sklad_id: sklad_id,
-          quantify: quantify(product_id),
-          aasm_state: 'inprocess'
-        })
+
+      if params["products"]
+        params["products"].each do |product_id|
+          # some methods from concerns
+          deliveries.push({
+            date_time: date_time(product_id), 
+            product_id: product_id.to_i,
+            sklad_id: sklad_id,
+            quantify: quantify(product_id),
+            aasm_state: 'inprocess'
+          }) 
+        end
+      else
+        @delivery = Delivery.new()
+        @delivery.errors.add(t('products'), t('not_products'))
       end
-      deliveries
+
+      return deliveries
     end
 
     def make_delivered delivery
@@ -101,5 +118,9 @@ class DeliveriesController < ApplicationController
         created_at: delivery.created_at,
         date_time: l(delivery.date_time,  :format => "%d %B %Y - %H:%M")
       }
+    end
+
+    def flash_error_message(arg)
+      "#{arg.errors.count} : #{arg.errors.full_messages.join(', ')}"       
     end
 end
