@@ -33,6 +33,7 @@ class DeliveriesController < ApplicationController
 
   # POST /deliveries
   def create( delivery=nil,delivered=false )
+    # Cancle all if error 
     ActiveRecord::Base.transaction do
       prepare_params.each do |prepared_params| 
         @delivery = Delivery.new(prepared_params.merge({ consignment: Time.now.to_i }))
@@ -96,10 +97,10 @@ class DeliveriesController < ApplicationController
         params["products"].each do |product_id|
           # some methods from concerns
           deliveries.push({
-            date_time: date_time(product_id), 
+            date_time:  date_time(product_id), 
             product_id: product_id.to_i,
-            sklad_id: sklad_id,
-            quantify: quantify(product_id),
+            sklad_id:   sklad_id,
+            quantify:   quantify(product_id),
             aasm_state: 'inprocess'
           }) 
         end

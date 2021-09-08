@@ -18,6 +18,7 @@ class ApplicationRecord < ActiveRecord::Base
   def updated_at_original
     updated_at(true)
   end
+  
   def updated_at(original=false)
     if original == true
       attributes['updated_at']

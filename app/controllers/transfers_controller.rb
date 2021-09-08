@@ -1,6 +1,8 @@
 class TransfersController < ApplicationController
   before_action :set_transfer, only: [:show, :edit, :update, :destroy ]
   before_action :set_sklads
+  
+  include ParamsPrepareConcern
 
   # GET /transfers
   def index
@@ -37,9 +39,14 @@ class TransfersController < ApplicationController
       @transfer.products ||= []
       if params["products"]
         params["products"].each do |product_id|
-          @transfer.src.product_get( product_id, params["quantify"][product_id].to_i )
-          @transfer.dst.product_add( product_id, params["quantify"][product_id].to_i )
-          @transfer.products << "#{product_id}-#{params["quantify"][product_id]}"
+          transfering_quantify = quantify(product_id)
+
+          # Transfer products between Sklads
+          @transfer.src.product_get( product_id, transfering_quantify )
+          @transfer.dst.product_add( product_id, transfering_quantify )
+
+          # Set info products on Sklad
+          @transfer.products << "#{product_id}-#{transfering_quantify}"
           @transfer.save!
         end
       else
